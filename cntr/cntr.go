@@ -25,7 +25,7 @@ SOFTWARE.
 package cntr
 
 import (
-    "sync"
+	"sync"
 )
 
 // Int64 is a threadsafe counter of type int64
@@ -36,24 +36,28 @@ type Int64 struct {
 
 // NewInt64 creates a new Int64 counter
 func NewInt64() *Int64 {
-    return &Int64{}
+	return &Int64{}
 }
 
-// PlusOne increments the counter by 1
-func (c *Int64) PlusOne() {
+// PlusOne increments the counter by 1 and returns the new value
+func (c *Int64) PlusOne() (v int64) {
 	c.mu.Lock()
 	c.v++
+	v = c.v
 	c.mu.Unlock()
+	return
 }
 
-// PlusX increments the counter by X
-func (c *Int64) PlusX(x int64) {
+// PlusX increments the counter by X and returns the new value
+func (c *Int64) PlusX(x int64) (v int64) {
 	c.mu.Lock()
 	c.v += x
+	v = c.v
 	c.mu.Unlock()
+	return
 }
 
-// Value returns the value of the counter
+// Value returns the current value of the counter
 func (c *Int64) Value() (v int64) {
 	c.mu.Lock()
 	v = c.v
@@ -68,7 +72,7 @@ func (c *Int64) ToZero() {
 	c.mu.Unlock()
 }
 
-// ToValue sets the value of the counter to a given value
+// ToValue sets the value of the counter to the provided value
 func (c *Int64) ToValue(v int64) {
 	c.mu.Lock()
 	c.v = v
@@ -83,21 +87,25 @@ type Int struct {
 
 // NewInt creates a new Int counter
 func NewInt() *Int {
-    return &Int{}
+	return &Int{}
 }
 
-// PlusOne increments the counter by 1
-func (c *Int) PlusOne() {
+// PlusOne increments the counter by 1 and returns the new value
+func (c *Int) PlusOne() (v int) {
 	c.mu.Lock()
 	c.v++
+	v = c.v
 	c.mu.Unlock()
+	return
 }
 
-// PlusX increments the counter by X
-func (c *Int) PlusX(x int) {
+// PlusX increments the counter by X and returns the new value
+func (c *Int) PlusX(x int) (v int) {
 	c.mu.Lock()
 	c.v += x
+	v = c.v
 	c.mu.Unlock()
+	return
 }
 
 // Value returns the value of the counter
@@ -115,7 +123,7 @@ func (c *Int) ToZero() {
 	c.mu.Unlock()
 }
 
-// ToValue sets the value of the counter to a given value
+// ToValue sets the value of the counter to the provided value
 func (c *Int) ToValue(v int) {
 	c.mu.Lock()
 	c.v = v
