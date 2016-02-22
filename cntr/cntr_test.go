@@ -86,6 +86,10 @@ func TestCounterInt64(t *testing.T) {
 		t.Error("Int64 counter ToValue() did not set the value")
 	}
 
+	if cPlusOne.PlusOne() != math.MinInt64 {
+		t.Error("Int64 counter did not roll over")
+	}
+
 	cPlusOne.ToValue(math.MinInt64)
 	if cPlusOne.Value() != math.MinInt64 {
 		t.Error("Int64 counter ToValue() did not set the value")
